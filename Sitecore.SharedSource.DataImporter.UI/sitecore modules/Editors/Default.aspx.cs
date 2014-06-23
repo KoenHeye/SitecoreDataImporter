@@ -82,7 +82,7 @@ public partial class Default : Page
                         Log("Error", "the binary specified could not be found");
                     }
                     if (map != null)
-                    log.Append(map.Process());
+                        log.Append(map.Process(cbxDelete.Checked));
                     else
                         Log("Error", "the data map provided could not be instantiated");
                 } else {

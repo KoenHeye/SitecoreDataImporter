@@ -26,6 +26,14 @@
                     <asp:DropDownList ID="ddlConnStr" runat="server"></asp:DropDownList>
 				    <div class="clear"></div>
                 </div>
+                <div class="formRow">
+                    <div class="btnBox">
+			            <div>
+			                <asp:CheckBox runat="server" ID="cbxDelete" Text="Delete all existing items in import folder"/>
+			            </div>
+                        <div class="clear"></div>
+			        </div>
+                </div>
             </div>
         </div>
         <div class="clear"></div>

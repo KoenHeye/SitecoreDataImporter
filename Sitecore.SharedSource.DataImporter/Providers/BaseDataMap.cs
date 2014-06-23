@@ -445,6 +445,15 @@ namespace Sitecore.SharedSource.DataImporter.Providers
         /// </summary>
         public string Process()
         {
+            return Process(false);
+        }
+
+        /// <summary>
+        /// processes each field against the data provided by subclasses
+        /// </summary>
+        /// <param name="deleteExistingItems">When true, all existing items in the parent folder will be deleted first.</param>
+        public string Process(bool deleteExistingItems)
+        {
             IEnumerable<object> importItems;
             try {
                 importItems = GetImportData();
@@ -452,7 +461,10 @@ namespace Sitecore.SharedSource.DataImporter.Providers
                 importItems = Enumerable.Empty<object>();
                 Log("Connection Error", ex.Message);
             }
-            
+
+            if(deleteExistingItems)
+                DeleteChildrenOfParent();
+
             //Loop through the data source
             foreach (object importRow in importItems)
             {
@@ -523,6 +535,18 @@ namespace Sitecore.SharedSource.DataImporter.Providers
                 Log("Success", "the import completed successfully");
 
             return log.ToString();
+        }
+
+        /// <summary>
+        /// Deletes all children of the parent folder
+        /// </summary>
+        private void DeleteChildrenOfParent()
+        {
+            if (Parent != null && Parent.HasChildren)
+            {
+                Parent.DeleteChildren();
+                Log("Success", "Deleted all items under the parent folder.");
+            }
         }
 
         /// <summary>
