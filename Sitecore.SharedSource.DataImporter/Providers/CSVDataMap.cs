@@ -87,7 +87,7 @@ namespace Sitecore.SharedSource.DataImporter.Providers {
         #region Methods
 		
 		protected List<string> SplitString(string str, string splitter){
-			return str.Split(new string[] { splitter }, StringSplitOptions.RemoveEmptyEntries).ToList();
+			return str.Split(new [] { splitter }, StringSplitOptions.None).ToList();
 		}
 
 		protected byte[] GetFileBytes(string filePath) {
