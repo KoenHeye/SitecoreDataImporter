@@ -33,12 +33,16 @@ namespace Sitecore.SharedSource.DataImporter.Mappings.Fields {
 
         public override void FillField(BaseDataMap map, ref Item newItem, string importValue)
         {
+            if (string.IsNullOrEmpty(importValue))
+                return;
+            
+            DateTime date;
+            Field f = newItem.Fields[NewItemField];
+
             //try to parse date value
-            DateTime date = DateTime.Parse(importValue);
-			Field f = newItem.Fields[NewItemField];
-            if(f != null)
+            if(DateTime.TryParse(importValue, out date) && f != null)
                 f.Value = date.ToDateFieldValue();
-		}
+        }
 
 		#endregion Methods
 	}
