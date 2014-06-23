@@ -519,7 +519,10 @@ namespace Sitecore.SharedSource.DataImporter.Providers
 							//add in the field mappings
 							foreach (IBaseField d in this.FieldDefinitions) {
 								IEnumerable<string> values = GetFieldValues(d.GetExistingFieldNames(), importRow);
-								d.FillField(this, ref newItem, String.Join(d.GetFieldValueDelimiter(), values));
+							    d.FillField(this, ref newItem, String.Join(d.GetFieldValueDelimiter(),
+							            d.GetIgnoreEmptyValues() 
+                                            ? values.Where(s => !string.IsNullOrWhiteSpace(s)).ToList()
+                                            : values));
 							}
 
 							//calls the subclass method to handle custom fields and properties

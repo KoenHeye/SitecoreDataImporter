@@ -72,6 +72,11 @@ namespace Sitecore.SharedSource.DataImporter.Mappings.Fields {
             return string.Empty;
         }
 
+        public bool GetIgnoreEmptyValues()
+        {
+            return false;
+        }
+
         #endregion IBaseField Methods
 	}
 }

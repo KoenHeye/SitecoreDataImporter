@@ -25,33 +25,23 @@ namespace Sitecore.SharedSource.DataImporter.Mappings.Fields
         /// </summary>
 		public char[] comSplitr = { ',' };
 
-		private IEnumerable<string> _existingDataNames;
-		/// <summary>
-		/// the existing data fields you want to import
-		/// </summary>
-        public IEnumerable<string> ExistingDataNames {
-			get {
-				return _existingDataNames;
-			}
-			set {
-				_existingDataNames = value;
-			}
-		}
+        /// <summary>
+        /// the existing data fields you want to import
+        /// </summary>
+        public IEnumerable<string> ExistingDataNames { get; set; }
 
-		private string _delimiter;
-		/// <summary>
-		/// the delimiter you want to separate imported data with
-		/// </summary>
-        public string Delimiter {
-			get {
-				return _delimiter;
-			}
-			set {
-				_delimiter = value;
-			}
-		}
-		
-		#endregion Properties
+        /// <summary>
+        /// the delimiter you want to separate imported data with
+        /// </summary>
+        public string Delimiter { get; set; }
+
+        /// <summary>
+        /// Use in combination with multiple fiels and a delimiter.
+        /// If set to true, empty values won't be concatenated.
+        /// </summary>
+        public bool IgnoreEmptyValues { get; set; }
+
+        #endregion Properties
 		
 		#region Constructor
 
@@ -59,6 +49,10 @@ namespace Sitecore.SharedSource.DataImporter.Mappings.Fields
             //store fields
             ExistingDataNames = i.Fields["From What Fields"].Value.Split(comSplitr, StringSplitOptions.RemoveEmptyEntries);
 			Delimiter = i.Fields["Delimiter"].Value;
+		    
+		    var cbf = (CheckboxField) i.Fields["Ignore Empty Values"];
+		    if (cbf != null)
+		        IgnoreEmptyValues = cbf.Checked;
 		}
 
 		#endregion Constructor
@@ -92,6 +86,11 @@ namespace Sitecore.SharedSource.DataImporter.Mappings.Fields
         public string GetFieldValueDelimiter()
         {
             return Delimiter;
+        }
+
+        public bool GetIgnoreEmptyValues()
+        {
+            return IgnoreEmptyValues;
         }
 
         #endregion IBaseField Methods

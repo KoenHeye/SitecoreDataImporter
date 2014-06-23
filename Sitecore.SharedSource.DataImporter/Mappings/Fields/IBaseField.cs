@@ -35,6 +35,12 @@ namespace Sitecore.SharedSource.DataImporter.Mappings.Fields {
         /// <returns></returns>
         string GetFieldValueDelimiter();
 
-		#endregion Methods
+        /// <summary>
+        /// returns a boolean indicating if empty values need to be ignored during the import
+        /// </summary>
+        /// <returns></returns>
+	    bool GetIgnoreEmptyValues();
+
+	    #endregion Methods
 	}
 }
